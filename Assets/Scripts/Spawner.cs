@@ -1,0 +1,15 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Spawner : MonoBehaviour {
+	// Use this for initialization
+	void Start () {
+        GameObject instance = (GameObject)Instantiate(Resources.Load("Zombie"));
+	}
+	
+	// Update is called once per frame
+	void Update () {
+
+	}
+}
