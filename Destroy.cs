@@ -18,6 +18,13 @@ public class Destroy : MonoBehaviour
         {
             gameController = gameControllerObject.GetComponent<GameController>;
         }
+
+        // This insurrance policy in hopes that this never gets called, if something goes wrong, if the game stops working or we break something. At least we will have somewhere to start.
+
+        if (gameController == null) {
+            Debug.Log("Cannot find 'GameController' script");
+
+            }
     }
 
     void onTriggerEnter (Collider other)
