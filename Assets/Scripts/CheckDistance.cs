@@ -6,6 +6,7 @@ public class CheckDistance : MonoBehaviour {
     // This whole behaviour just checks distance between the player and the zombie, if it's close enough the zombie attacks.
     GameObject player;
     public float distance;
+    public double attackRange = 2;
 
     private void Start()
     {
@@ -16,7 +17,7 @@ public class CheckDistance : MonoBehaviour {
     {
         distance = Vector3.Distance(transform.position, player.transform.position);
         var animator = gameObject.GetComponent<Animator>();
-        if (distance < 2.5)
+        if (distance < attackRange)
         {
             animator.SetTrigger("PlayerNear");
             //player.health -= 14 | ready to deduct health when player health is done
