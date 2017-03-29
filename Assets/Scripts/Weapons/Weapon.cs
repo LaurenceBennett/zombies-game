@@ -51,5 +51,9 @@ public class Weapon : MonoBehaviour {
 	public void reload() {
 		this.clipAmount = clipSize;
 	}
+
+	public float getDamage() {
+		return damage;
+	}
 }
 
