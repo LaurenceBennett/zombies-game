@@ -36,22 +36,7 @@ public class PlayerLook : MonoBehaviour {
 		currentYRotation = Mathf.SmoothDamp(currentYRotation, yRotation, ref yRotationV, lookSmoothnes);
 		transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
 
-		//BARRIER STUFF, WILL CHANGE
-		if (Input.GetButtonDown ("Fire1")) {
-			RaycastHit shot;
-			if(Physics.Raycast(transform.position, 
-				transform.TransformDirection(Vector3.forward), out shot)) {
-				TargetDistance = shot.distance;
-				if (TargetDistance < allowedRange) {
-					Debug.Log (shot.transform.name);
-					shot.transform.SendMessage ("DeductPoints", 5, SendMessageOptions.DontRequireReceiver);
-					barricadeUse = true;
-				}
-				if (TargetDistance > allowedRange) {
-					barricadeUse = false;
-				}
-			}
-		}
+
 
 	}
 
