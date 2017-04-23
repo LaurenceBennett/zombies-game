@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuyWeapon : MonoBehaviour {
+public class BuyPower : MonoBehaviour {
 
 	GameObject player;
-	WeaponHandler weaponHandlerScript;
+	PlayerStats playerStatsScript;
 	GameObject canvas;
 	public float distance;
-	public double buyRange = 2;
+	public double buyRange = 3;
 	Text buyText;
 	public Text buyTextPrefab;
 	public int scorePrice;
@@ -21,7 +21,7 @@ public class BuyWeapon : MonoBehaviour {
 	private void Start()
 	{
 		player = GameObject.FindWithTag("Player");
-		weaponHandlerScript = (WeaponHandler)player.GetComponent (typeof(WeaponHandler));
+		playerStatsScript = (PlayerStats)player.GetComponent (typeof(PlayerStats));
 		canvas = GameObject.Find ("Canvas");
 		scoreObject = GameObject.Find ("Score");
 		playerScore = (Score)scoreObject.GetComponent (typeof(Score));
@@ -39,9 +39,11 @@ public class BuyWeapon : MonoBehaviour {
 				buyText.transform.SetParent (canvas.transform, false);
 				buyText.text = "'G' to buy " + transform.name + " for " + scorePrice.ToString();
 			}
-			if (Input.GetKeyDown(KeyCode.G) && playerScore.getScore() >= scorePrice) {
-				weaponHandlerScript.replaceWeapon (transform.name);
+			if (Input.GetKeyDown (KeyCode.G) && playerScore.getScore() >= scorePrice) {
 				playerScore.loseScore (scorePrice);
+				if (transform.name.Equals ("Health")) {
+					playerStatsScript.fillHealth ();
+				}
 			}
 		} else {
 			if (buyText != null) {

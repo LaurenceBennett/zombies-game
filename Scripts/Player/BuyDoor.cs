@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuyWeapon : MonoBehaviour {
+public class BuyDoor : MonoBehaviour {
 
 	GameObject player;
-	WeaponHandler weaponHandlerScript;
 	GameObject canvas;
 	public float distance;
-	public double buyRange = 2;
+	public double buyRange = 3;
 	Text buyText;
 	public Text buyTextPrefab;
 	public int scorePrice;
@@ -17,31 +16,33 @@ public class BuyWeapon : MonoBehaviour {
 	GameObject scoreObject;
 	Score playerScore;
 
+	GameObject spawnerObject;
+	Spawner spawnerScript;
 
-	private void Start()
-	{
+	void Start () {
 		player = GameObject.FindWithTag("Player");
-		weaponHandlerScript = (WeaponHandler)player.GetComponent (typeof(WeaponHandler));
 		canvas = GameObject.Find ("Canvas");
 		scoreObject = GameObject.Find ("Score");
+		spawnerObject = GameObject.Find ("SpawnerManager");
+		spawnerScript = (Spawner)spawnerObject.GetComponent (typeof(Spawner));
 		playerScore = (Score)scoreObject.GetComponent (typeof(Score));
-
-
 	}
-
-	private void Update()
-	{
+	
+	// Update is called once per frame
+	void Update () {
 		distance = Vector3.Distance(transform.position, player.transform.position);
 
 		if (distance < buyRange) {
 			if (buyText == null) {
 				buyText = (Text)Instantiate (buyTextPrefab);
 				buyText.transform.SetParent (canvas.transform, false);
-				buyText.text = "'G' to buy " + transform.name + " for " + scorePrice.ToString();
+				buyText.text = "'T' to open for " + scorePrice.ToString();
 			}
-			if (Input.GetKeyDown(KeyCode.G) && playerScore.getScore() >= scorePrice) {
-				weaponHandlerScript.replaceWeapon (transform.name);
+			if (Input.GetKey (KeyCode.T) && playerScore.getScore() >= scorePrice) {
+				Destroy (transform.gameObject);
 				playerScore.loseScore (scorePrice);
+				Destroy (buyText.transform.gameObject);
+				spawnerScript.removeDoor (transform.name);
 			}
 		} else {
 			if (buyText != null) {
@@ -49,5 +50,4 @@ public class BuyWeapon : MonoBehaviour {
 			}
 		}
 	}
-
 }
