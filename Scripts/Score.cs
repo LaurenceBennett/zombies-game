@@ -5,11 +5,11 @@ using UnityEngine.UI;
 public class Score : MonoBehaviour
 {
     public Text scoreText;
-	public static int score = 1000;
+	public static int score = 10000;
 
     void awake()
     {
-        score = 1000;
+        score = 10000;
         updateScore();
         scoreText = GetComponent<Text>();
     }

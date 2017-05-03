@@ -29,11 +29,11 @@ public class PlayerController : MonoBehaviour {
 			moveDirection = transform.TransformDirection(moveDirection);
 			if (Input.GetKey (KeyCode.LeftShift) && stamina > 0f) {
 				moveDirection *= runSpeed;
-				stamina -= Time.time * 0.1f;
+				stamina -= 0.1f;
 
 			} else {
 				if (stamina < 30f) {
-					stamina += Time.time * 0.01f;
+					stamina += 0.1f;
 				}
 				moveDirection *= walkSpeed;
 			}
@@ -43,6 +43,21 @@ public class PlayerController : MonoBehaviour {
 
 		moveDirection.y -= gravity * Time.deltaTime;
 		controller.Move(moveDirection * Time.deltaTime);
+	}
+
+	public void speedPowerUp() {
+		walkSpeed = walkSpeed + 5f;
+		runSpeed = runSpeed  + 5f;
+		StartCoroutine (SpeedTimer (10.0f));
+
+	}
+	IEnumerator SpeedTimer(float time)
+
+	{
+		yield return new WaitForSecondsRealtime (time);
+
+		walkSpeed = walkSpeed - 5f;
+		runSpeed = runSpeed - 5f;
 	}
 
 }

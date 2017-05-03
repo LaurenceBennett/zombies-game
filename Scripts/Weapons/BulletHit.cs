@@ -13,20 +13,21 @@ public class BulletHit : MonoBehaviour {
 		player = GameObject.FindWithTag("Player");
 
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
 	void OnCollisionEnter(Collision col) {
 		WeaponHandler currentWeapon = (WeaponHandler)player.GetComponent (typeof(WeaponHandler));
 		int gunDamage = (int)currentWeapon.getDamage ();
-		int gunDamageRange = (int)currentWeapon.getDamageRange ();
+		int gunDamageRange = (int)currentWeapon.getRangeDamage ();
+		Debug.Log (col.gameObject.name);
 
-		if (col.gameObject.name.Equals ("Zombie(Clone)")) {
+		if (col.gameObject.tag.Equals("Zombie")) {
 			GameObject zombie = col.gameObject;
-            ZombieBehaviour zombieScript = (ZombieBehaviour)zombie.GetComponent (typeof(ZombieBehaviour));
+			ZombieBehaviour zombieScript = (ZombieBehaviour)zombie.GetComponent (typeof(ZombieBehaviour));
 			if (CheckDistance ()) {
 				zombieScript.loseHealth (gunDamage, false);
 				Debug.Log ("In range");
@@ -41,6 +42,7 @@ public class BulletHit : MonoBehaviour {
 		}
 
 		else if (col.gameObject.name.Equals("mesh_Head")) {
+			Debug.Log ("Headshot");
 			GameObject zombie = col.transform.parent.gameObject;
 			ZombieBehaviour zombieScript = (ZombieBehaviour)zombie.GetComponent (typeof(ZombieBehaviour));
 			double DoubDamage = (double) gunDamage * 1.5; //Headshot damage

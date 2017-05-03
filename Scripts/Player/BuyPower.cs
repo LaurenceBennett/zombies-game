@@ -7,6 +7,7 @@ public class BuyPower : MonoBehaviour {
 
 	GameObject player;
 	PlayerStats playerStatsScript;
+	PlayerController playerControllerScript;
 	GameObject canvas;
 	public float distance;
 	public double buyRange = 3;
@@ -22,6 +23,7 @@ public class BuyPower : MonoBehaviour {
 	{
 		player = GameObject.FindWithTag("Player");
 		playerStatsScript = (PlayerStats)player.GetComponent (typeof(PlayerStats));
+		playerControllerScript = (PlayerController)player.GetComponent (typeof(PlayerController));
 		canvas = GameObject.Find ("Canvas");
 		scoreObject = GameObject.Find ("Score");
 		playerScore = (Score)scoreObject.GetComponent (typeof(Score));
@@ -43,6 +45,8 @@ public class BuyPower : MonoBehaviour {
 				playerScore.loseScore (scorePrice);
 				if (transform.name.Equals ("Health")) {
 					playerStatsScript.fillHealth ();
+				} else if (transform.name.Equals ("Speed")) {
+					playerControllerScript.speedPowerUp ();
 				}
 			}
 		} else {

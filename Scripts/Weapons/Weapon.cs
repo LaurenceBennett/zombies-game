@@ -21,25 +21,25 @@ public class Weapon : MonoBehaviour {
 
 	public float firerate;
 	public float reloadTime;
-    AudioSource source;
+	AudioSource source;
 
 
-    private void Awake()
-    {
+	private void Awake()
+	{
 
-    }
-    // Use this for initialization
-    void Start ()
+	}
+	// Use this for initialization
+	void Start ()
 	{
 		canvas = GameObject.Find ("Canvas");	
-        source = GetComponent<AudioSource>();
+		source = GetComponent<AudioSource>();
 
-    }
-	
+	}
+
 	// Update is called once per frame
 	void Update ()
 	{
-		
+
 		source = GetComponent<AudioSource> ();
 		if (timing) {
 			if (currentAmount < 100) {
@@ -77,7 +77,7 @@ public class Weapon : MonoBehaviour {
 
 	public void fireGun() {
 		this.bulletAmount--;
-        source.Play();
+		source.Play();
 	}
 
 	public void reload() {
@@ -87,13 +87,23 @@ public class Weapon : MonoBehaviour {
 
 	}
 
+	public void stopReload() {
+		if (loadingBar != null) {
+			Destroy (loadingBar.gameObject);
+			currentAmount = 0;
+			timing = false;
+		}
+		
+	}
+
+
 	IEnumerator ReloadTimer(float time)
 	{
-	    timing = true;
+		timing = true;
 		loadingBar = (Transform)Instantiate (loadingBarPrefab);
 		loadingBar.gameObject.SetActive (true);
 		loadingBar.transform.SetParent (canvas.transform, false);
-		
+
 		yield return new WaitForSecondsRealtime (time);
 		Destroy (loadingBar.gameObject);
 		currentAmount = 0;

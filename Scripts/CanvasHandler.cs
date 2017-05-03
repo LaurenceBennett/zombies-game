@@ -13,13 +13,13 @@ public class CanvasHandler : MonoBehaviour {
 	void Start () {
 		headshotText.enabled = false;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		weaponScript = (Weapon)weaponObject.GetComponent (typeof(Weapon));
 		ammoText.text = weaponScript.getBulletAmount ().ToString () + "/" + weaponScript.getClipAmount ().ToString ();
-	
-	
+
+
 	}
 
 	public void setWeaponObject(GameObject weapon, bool weaponNum) {
@@ -54,7 +54,7 @@ public class CanvasHandler : MonoBehaviour {
 
 	public void headshot() {
 		StartCoroutine(ShowMessage("Headshot!", 2));
-	
+
 	}
 
 	IEnumerator ShowMessage(string message, float delay) {

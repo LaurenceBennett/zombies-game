@@ -5,7 +5,7 @@ public class PlayerLook : MonoBehaviour {
 
 	float yRotation;
 	float xRotation;
-	float lookSensitivity = 3;
+	public static float lookSensitivity = 3;
 	float currentXRotation;
 	float currentYRotation;
 	float yRotationV;
@@ -43,6 +43,7 @@ public class PlayerLook : MonoBehaviour {
 	void OnMouseDown() {
 		Debug.Log ("Down");
 		mouseDown = true;
+
 	}
 
 	void OnMouseUp() {
