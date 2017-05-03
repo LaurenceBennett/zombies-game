@@ -87,6 +87,16 @@ public class Weapon : MonoBehaviour {
 
 	}
 
+	public void stopReload() {
+		if (loadingBar != null) {
+			Destroy (loadingBar.gameObject);
+			currentAmount = 0;
+			timing = false;
+		}
+		
+	}
+
+
 	IEnumerator ReloadTimer(float time)
 	{
 		timing = true;

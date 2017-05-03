@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class WeaponHandler : MonoBehaviour {
 
 	public GameObject gunLocation; //Where the gun's position is
-
+	public RectTransform sniperScope;
 	public GameObject weapon1;
 	public GameObject weapon2;
 	public GameObject currentWeapon;
@@ -18,12 +19,14 @@ public class WeaponHandler : MonoBehaviour {
 	public GameObject muzzleFlashObject;
 	public float muzzleFlashTimer = 0.1f;
 	public bool muzzleFlashEnabled = false;
+	private bool zoomed = false;
 	private Shader shader;
 	public GameObject[] weaponPrefabs; //Array of all purchaseable weapons
 
 	// Use this for initialization
 	void Start () {
 
+		sniperScope.gameObject.SetActive (false);
 		weaponPrefabs = Resources.LoadAll<GameObject> ("WeaponPrefabs");
 		canvasHandlerScript = (CanvasHandler)canvas.GetComponent (typeof(CanvasHandler));
 		canvasHandlerScript.setWeaponObject (weapon1, false);
@@ -38,17 +41,19 @@ public class WeaponHandler : MonoBehaviour {
 
 	void Update() {
 
-
-		if (Input.GetKeyDown("1")) {
-			Debug.Log ("key one");
+		//Switch to weapon 1
+		if (Input.GetKeyDown("1") && !zoomed) {
+			currentWeaponScript.stopReload ();
 			canvasHandlerScript.setWeaponObject (weapon1, false);
 			weapon1.SetActive (true);
-			currentWeapon = weapon1;
 			weapon2.SetActive (false);
+			currentWeapon = weapon1;
 			currentWeaponScript = (Weapon) currentWeapon.GetComponent (typeof(Weapon));
 		}
 
-		else if (Input.GetKeyDown ("2")) {
+		//Switch to weapon 2
+		else if (Input.GetKeyDown ("2") && !zoomed) {
+			currentWeaponScript.stopReload ();
 			canvasHandlerScript.setWeaponObject (weapon2, true);
 			weapon2.SetActive (true);
 			weapon1.SetActive (false);
@@ -57,6 +62,25 @@ public class WeaponHandler : MonoBehaviour {
 
 
 		}
+
+		//Zoom in
+		if (Input.GetMouseButtonDown (1) && currentWeaponScript.name.Equals ("Sniper rifle") && !zoomed) {
+			Camera.main.fieldOfView = 20f;
+			PlayerLook.lookSensitivity = 0.5F;
+			sniperScope.gameObject.SetActive (true);
+			zoomed = true;
+		}
+
+		//Zoom out
+		else if(Input.GetMouseButtonDown (1) && currentWeaponScript.name.Equals ("Sniper rifle") && zoomed) {
+			Camera.main.fieldOfView = 60f;
+			PlayerLook.lookSensitivity = 3F;
+			sniperScope.gameObject.SetActive (false);
+			zoomed = false;
+
+
+		}
+
 
 
 		//FIRING WEAPON
