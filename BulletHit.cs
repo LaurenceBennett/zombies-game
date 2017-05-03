@@ -25,7 +25,7 @@ public class BulletHit : MonoBehaviour {
 		int gunDamageRange = (int)currentWeapon.getRangeDamage ();
 		Debug.Log (col.gameObject.name);
 
-		if (col.gameObject.name.Equals ("Zombie(Clone)")) {
+		if (col.gameObject.tag.Equals("Zombie")) {
 			GameObject zombie = col.gameObject;
 			ZombieBehaviour zombieScript = (ZombieBehaviour)zombie.GetComponent (typeof(ZombieBehaviour));
 			if (CheckDistance ()) {
@@ -42,7 +42,7 @@ public class BulletHit : MonoBehaviour {
 		}
 
 		else if (col.gameObject.name.Equals("mesh_Head")) {
-			Debug.Log ("yyyyass");
+			Debug.Log ("Headshot");
 			GameObject zombie = col.transform.parent.gameObject;
 			ZombieBehaviour zombieScript = (ZombieBehaviour)zombie.GetComponent (typeof(ZombieBehaviour));
 			double DoubDamage = (double) gunDamage * 1.5; //Headshot damage
